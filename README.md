@@ -84,4 +84,4 @@ The structure of a `main.dat` file is shown on the following diagram:
 
 The string ID serves to identify it in the NPC dialog tree ([as shown here](http://ice-pick.com/translate/PTP/dialogs.php?parentId=20), for example). The dialog tree is presumably baked into the game executable.
 
-The string length is (somewhat weirdly) represented by either 1 or 2 bytes, as follows: if the string length is less than 128 characters, it is represented by 1 byte; if it's greater or equal to 128, it's represented by the `(byte1 % 128) + (byte2 << 7)`. See the `decode_keys.py` program for an example of a `main.dat` decoder.
+The string length is (somewhat weirdly) represented by either 1 or 2 bytes, as follows: if the string length is less than 128 characters, it is represented by 1 byte; if it's greater or equal to 128, it's represented by `(byte1 % 128) + (byte2 << 7)`. See the `decode_keys.py` program for an example of a `main.dat` decoder.
