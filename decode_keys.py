@@ -24,7 +24,9 @@ def read_int(f):
     b = f.read(4)
     return struct.unpack('<i', b)[0]
 
-def decode_file(infile, outfile):
+def decode_file(infile):
+    strings = []
+
     with open(infile, 'rb') as f:
         count = read_int(f)
         for i in xrange(count):
@@ -39,6 +41,10 @@ def decode_file(infile, outfile):
             strings.append((id, f.read(len * 2).decode("utf-16")))
 
     strings.sort(key=lambda str: str[0])
+
+    return strings
+
+def write_xml(strings, outfile):
     with codecs.open(outfile, "wb") as g:
         g.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<strings>\r\n".encode("utf-8"))
 
@@ -46,12 +52,13 @@ def decode_file(infile, outfile):
             g.write((u"<string id=\"%s\"><![CDATA[%s]]></string>\r\n" % (id, string)).encode("utf-8"))
         g.write("</strings>\r\n".encode("utf-8"))
 
+
 if __name__ == '__main__':
     args = parse_args()
 
     infile = args.i
     outfile = args.o or (infile + '.xml')
     #lang = args.lang
-    strings = []
 
-    decode_file(infile, outfile)
+    strings = decode_file(infile)
+    write_xml(strings, outfile)
