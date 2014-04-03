@@ -24,15 +24,7 @@ def read_int(f):
     b = f.read(4)
     return struct.unpack('<i', b)[0]
 
-if __name__ == '__main__':
-    args = parse_args()
-
-    infile = args.i
-    outfile = args.o or (infile + '.xml')
-    #lang = args.lang
-    strings = []
-        
-
+def decode_file(infile, outfile):
     with open(infile, 'rb') as f:
         count = read_int(f)
         for i in xrange(count):
@@ -53,3 +45,13 @@ if __name__ == '__main__':
         for (id, string) in strings:
             g.write((u"<string id=\"%s\"><![CDATA[%s]]></string>\r\n" % (id, string)).encode("utf-8"))
         g.write("</strings>\r\n".encode("utf-8"))
+
+if __name__ == '__main__':
+    args = parse_args()
+
+    infile = args.i
+    outfile = args.o or (infile + '.xml')
+    #lang = args.lang
+    strings = []
+
+    decode_file(infile, outfile)
