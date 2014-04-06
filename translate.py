@@ -12,8 +12,8 @@ def build_dict(string_list):
     result = dict()
     for str in string_list:
         result[str[0]] = str
-    return result        
-    
+    return result
+
 def process_xslx(path):
     book = xlrd.open_workbook(path)
     sheet = book.sheet_by_index(0)
@@ -24,8 +24,8 @@ def process_xslx(path):
     else:
         process_type2(sheet)
         return []
-        
-def process_type1(sheet):        
+
+def process_type1(sheet):
     rows = []
     for row_idx in xrange(1, sheet.nrows):
         row = [sheet.cell(row_idx, col_idx).value for col_idx in xrange(0, sheet.ncols)]
@@ -35,14 +35,14 @@ def process_type1(sheet):
     return rows
 
 def process_type2(sheet):
-    pass    
+    pass
 
 def visit(dirpath, dirnames, filenames):
     rows = []
     for file in filenames:
         if os.path.splitext(file)[1] == '.xlsx':
             rows.extend(process_xslx(os.path.join(dirpath, file)))
-    return rows            
+    return rows
 
 sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
 gen = SU.XMLGenerator(sys.stdout, 'utf-8')
@@ -61,5 +61,4 @@ for row in rows:
     sys.stdout.write('<![CDATA[' + row[4] + ']]>')
     sys.stdout.write('</string>\n')
 
-gen.endElement('</strings>')    
-
+sys.stdout.write('</strings>\n')
