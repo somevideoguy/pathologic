@@ -17,7 +17,7 @@ def write_str_len(g, len):
 	if len < 0x80:
 		g.write(struct.pack('B', len))
 	else:
-		g.write(struct.pack('B', len & 0x7f))
+		g.write(struct.pack('B', (len & 0x7f) + 0x80))
 		g.write(struct.pack('B', (len >> 7)))
 
 if __name__ == '__main__':
