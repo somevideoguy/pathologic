@@ -57,12 +57,18 @@ def write_str_len(g, len):
         g.write(struct.pack('B', (len >> 7)))
 
 def write_maindat_xml(strings, outfile):
-    with codecs.open(outfile, "wb") as g:
+    def write_helper(g):
         g.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<strings>\r\n".encode("utf-8"))
 
         for (id, string) in strings:
             g.write((u"<string id=\"%s\"><![CDATA[%s]]></string>\r\n" % (id, string)).encode("utf-8"))
         g.write("</strings>\r\n".encode("utf-8"))
+
+    if outfile.write:
+        write_helper(outfile)
+    else:
+        with codecs.open(outfile, "wb") as g:
+            write_helper(g)
 
 def write_maindat(strings, out):
     write_int(out, len(strings))
