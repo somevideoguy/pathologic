@@ -1,14 +1,8 @@
 import sys, struct, os.path, os
 from collections import namedtuple
+from pathologic import *
 
 File = namedtuple('File', ['filename', 'len', 'offset'])
-
-def read_bytes(f, count):
-    return f.read(count)
-
-def read_int(f):
-    b = f.read(4)
-    return struct.unpack('<i', b)[0]
 
 def read_header(f):
     filename_len = ord(f.read(1))
