@@ -4,6 +4,23 @@
 
 You can get a copy of *Pathologic*, in both English and Russian, at [Good Old Games.](http://www.gog.com/game/pathologic)
 
+# Usage
+
+The project supports both Python 2 and Python 3. To extract a `.vfs` file (e.g. `Strings.vfs`), run:
+
+    python vfs_parser.py <path/to/Strings.vfs>
+
+This will create a directory called `Strings` and place the contents of the archive in that directory. To decode `main.dat`, run:
+
+    python decode_keys.py -i Strings/main.dat
+
+This will create an XML file called `main.dat.xml` in the `Strings` directory. You can then change it with any text editor. When done, save it with a `UTF-8` encoding.
+To create a new `main.dat` with your changes, run:
+
+    python encode_keys.py -i Strings/main.dat.xml -o Strings/main.dat
+
+You don't need to pack the files back into the `.vfs`; see below for the reason why.
+
 # Directory structure
 
     +---bin
