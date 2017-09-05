@@ -1,4 +1,5 @@
 import argparse
+import codecs
 
 from pathologic import *
 
@@ -13,6 +14,6 @@ if __name__ == '__main__':
     args = parse_args()
     
     with open(args.outfile, 'wb') as out:
-        with open(args.infile, 'r') as inf:        
-            strings = read_maindat_xml(inf)            
+        with open(args.infile, 'rb') as inf:
+            strings = read_maindat_xml(inf)
             write_maindat(strings, out)

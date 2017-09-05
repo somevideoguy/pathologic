@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import sys, struct, os.path, os
 from collections import namedtuple
 from pathologic import *
@@ -25,16 +27,16 @@ if __name__ == '__main__':
         with open(sys.argv[1], 'rb') as f:
             os.chdir(dir_to_create)
 
-            print read_bytes(f, 4)
-            print read_int(f)
+            print(read_bytes(f, 4))
+            print(read_int(f))
             num_files = read_int(f)
 
             headers = []
-            for i in xrange(num_files):
+            for i in range(num_files):
                 headers.append(read_header(f))
 
             for header in headers:
-                print header
+                print(header)
                 f.seek(header.offset)
                 with open(header.filename, 'wb') as g:
                     g.write(f.read(header.len))

@@ -22,7 +22,7 @@ def read_maindat(infile):
 
     with open(infile, 'rb') as f:
         count = read_int(f)
-        for i in xrange(count):
+        for i in range(count):
             id = read_int(f)
             byte1 = ord(f.read(1))
             if byte1 & 0x80:
@@ -64,9 +64,9 @@ def write_maindat_xml(strings, outfile):
             g.write((u"<string id=\"%s\"><![CDATA[%s]]></string>\r\n" % (id, string)).encode("utf-8"))
         g.write("</strings>\r\n".encode("utf-8"))
 
-    if outfile.write:
+    try:
         write_helper(outfile)
-    else:
+    except AttributeError:
         with codecs.open(outfile, "wb") as g:
             write_helper(g)
 
