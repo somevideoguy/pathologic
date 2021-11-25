@@ -9,6 +9,10 @@ FileData = namedtuple("FileData", ['filename', 'len', 'timemodified'])
 Directory = namedtuple('Directory', ['dirname', 'subdirs', 'files'])
 DirectoryHeader = namedtuple('DirectoryHeader', ['dirname', 'numdirs', 'numfiles'])
 
+# acts like print, but prints to stderr rather than stdout
+def printerr(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
+
 def read_bytes(f, count):
     return f.read(count)
 
@@ -22,12 +26,12 @@ def read_int8(f):
 def read_filetime(f):
     b = f.read(8)
     thelong = struct.unpack('<q', b)[0]
-    thelong -= 11644473600000 * 10000
-    return thelong / 10000000
+    thelong -= 11644473600000 * 10000   # change epoch from 1 Jan 1601 to 1 Jan 1970
+    return thelong / 10000000           # convert from 100-nanosecond intervals to seconds
 
 def read_string(f, n):
     b = f.read(n)
-    return b.decode("iso8859-1")
+    return b.decode('iso8859-1')
 
 def read_maindat(infile):
     """

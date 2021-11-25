@@ -3,10 +3,6 @@ from __future__ import print_function
 import sys, os.path, os
 from pathologic import *
 
-# acts like print, but prints to stderr rather than stdout
-def printerr(*args, **kwargs):
-    print(*args, file=sys.stderr, **kwargs)
-
 """
     Reads the header data for a single file.
     The layout is (strings are ISO 8859-1 encoded (I think); ints are little-endian):
@@ -43,7 +39,7 @@ def read_file_header(f):
 def read_directory_header(f, isroot, curdir):
     dirname = curdir
     if isroot:
-        assert read_int(f) == 0x4331504C, "Magic number mismatch" # verify the file format by checking the magic number
+        assert read_int(f) == 0x4331504C, 'Magic number mismatch' # verify the file format by checking the magic number
     else:
         dirname_len = read_int8(f)
         dirname = read_string(f, dirname_len) + "/"
@@ -97,7 +93,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         file_name = sys.argv[1]
         if not os.path.isfile(file_name):
-            printerr("%s does not exist." % file_name)
+            printerr('%s does not exist.' % file_name)
             sys.exit()
         
         dir_to_create = os.path.splitext(file_name)[0]
@@ -115,4 +111,4 @@ if __name__ == '__main__':
             print('Writing files...')
             write_tree(f, tree)
     else:
-        printerr("Usage: vfs_parser.py <file to unpack>")
+        printerr('Usage: vfs_parser.py <file to unpack>')
