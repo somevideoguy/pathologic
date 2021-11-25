@@ -19,6 +19,10 @@ To create a new `main.dat` with your changes, run:
 
     python encode_keys.py -i Strings/main.dat.xml -o Strings/main.dat
 
+To pack a directory (e.g. `Strings`) into a `.vfs` file, run:
+
+    python vfs_pack.py Strings Strings.vfs
+
 You don't need to pack the files back into the `.vfs`; see below for the reason why.
 
 # Directory structure
