@@ -9,6 +9,19 @@ def read_int(f):
     b = f.read(4)
     return struct.unpack('<i', b)[0]
 
+def read_int8(f):
+    return ord(f.read(1))
+
+def read_filetime(f):
+    b = f.read(8)
+    thelong = struct.unpack('<q', b)[0]
+    thelong -= 11644473600000 * 10000
+    return thelong / 10000000
+
+def read_string(f, n):
+    b = f.read(n)
+    return b.decode("iso8859-1")
+
 def read_maindat(infile):
     """
         Format of the main.dat string file (all numbers are little-endian):
