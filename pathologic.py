@@ -1,6 +1,13 @@
 import struct
 import xml.dom.minidom
 import codecs
+import sys
+from collections import namedtuple
+
+File = namedtuple('File', ['filename', 'len', 'offset', 'timemodified'])
+FileData = namedtuple("FileData", ['filename', 'len', 'timemodified'])
+Directory = namedtuple('Directory', ['dirname', 'subdirs', 'files'])
+DirectoryHeader = namedtuple('DirectoryHeader', ['dirname', 'numdirs', 'numfiles'])
 
 def read_bytes(f, count):
     return f.read(count)

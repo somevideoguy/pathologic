@@ -1,12 +1,7 @@
 from __future__ import print_function
 
 import sys, os.path, os
-from collections import namedtuple
 from pathologic import *
-
-File = namedtuple('File', ['filename', 'len', 'offset', 'timemodified'])
-Directory = namedtuple('Directory', ['dirname', 'subdirs', 'files'])
-DirectoryHeader = namedtuple('DirectoryHeader', ['dirname', 'numdirs', 'numfiles'])
 
 # acts like print, but prints to stderr rather than stdout
 def printerr(*args, **kwargs):
@@ -86,11 +81,12 @@ def write_tree(fh, tree, curdir='./'):
     
     # write each file
     for f in tree.files:
-        print('%s%s\t%d bytes' % (curdir, f.filename, f.len))
+        file_path = curdir + f.filename
+        print('%s\t%d bytes' % (file_path, f.len))
         fh.seek(f.offset)
-        with open(f.filename, 'wb') as g:
+        with open(file_path, 'wb') as g:
             g.write(fh.read(f.len))
-        os.utime(f.filename, (f.timemodified, f.timemodified))
+        os.utime(file_path, (f.timemodified, f.timemodified))
     
     # recursively write each directory to the disk
     for dir in tree.subdirs:
